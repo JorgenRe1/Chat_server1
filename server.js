@@ -22,8 +22,8 @@ io.on('connection', function(socket){
     	var cid = socket.id;
         var navn = data["navn"];
 	brukere[cid] = [];
-	brukere[cid]["last"] = cid;
 	brukere[cid]["navn"] = navn;
+	brukere[cid]["last"] = "keine";
 	brukere[cid]["logg"] = "";
     });
   //Når en melding blir sendt til server
@@ -54,6 +54,7 @@ io.on('connection', function(socket){
   socket.on('message_to_server', function (data) {
 	  var cid = socket.id;
 	  var navn = data["navn"];
+	  var logg = brukere[cid]["logg"];
 	  console.log("ID: "+cid);
 	  if (brukere[cid] == null){
 	  	console.log("Ny bruker");
@@ -67,12 +68,13 @@ io.on('connection', function(socket){
 	  	if (brukere[cid]["last"] == cid){
 	  	    brukere[cid]["logg"] += "<br>&nbsp"+data["message"];	
 	  	} else {
-	  	   brukere[cid]["logg"] += "<br><span style='font-weight: bold; border-bottom: solid black;'>"+navn+"</span><br>&nbsp"+data["message"];
+	  	   if (logg != "") brukere[cid]["logg"] += "<br>";
+	  	   brukere[cid]["logg"] += "<span style='font-weight: bold; border-bottom: solid black;'>"+brukere[cid]["navn"]+"</span><br>&nbsp"+data["message"];
 	  	}
 	  }
 	  brukere[cid]["last"] = cid;
 	  console.log("Sender melding til: "+cid);
-	  io.to(cid).emit('message_to_client',{message: brukere[cid]["logg"]});
+	  io.to(cid).emit('message_to_client',{message: brukere[cid]["logg"], from: "self"});
   });
   
   //når admin chatter så må chatt logg objectet sendes til admin og bruker som hjelpes
@@ -87,8 +89,8 @@ io.on('connection', function(socket){
 	  }
 	  brukere[user_id]["last"] = admin_id;
 	  var logg = brukere[user_id]["logg"];
-          io.to(admin_id).emit('message_to_client',{message: logg});
-          io.to(user_id).emit('message_to_client',{message: logg});
+          io.to(admin_id).emit('message_to_client',{message: logg, from: "self"});
+          io.to(user_id).emit('message_to_client',{message: logg, from: brukere[admin_id]["navn"]});
   });
   socket.on('hent_chat',function(data){
       var user = data["user_id"];
