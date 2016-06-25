@@ -18,14 +18,26 @@ var brukere = [];
 io.on('connection', function(socket){
   console.log('a user connected');
   //Når en melding blir sendt til server
-  socket.on('message_to_server', function(data) {
+  socket.on('message_all', function(data) {
 	  //send til alle tilkoblede brukerne
         io.sockets.emit("message_to_client",{ message: data["message"] });
     });
-  socket.on('message_to_server3', function (data) {
-	  console.log("ID"+socket.id);
+  socket.on('message_to_server', function (data) {
 	  var cid = socket.id;
-	  io.cid.send("message_to_client",{ message: "Hello" });
+	  var navn = data["navn"];
+	  console.log("ID"+cid);
+	  if (brukere[cid] != null){
+	  	brukere[cid] = [];
+	  	brukere[cid]["logg"] = "<span style='font-weight: bold; border-bottom: solid black;'">+navn+"</span>+data["message"]";
+	  } else {
+	  	if (brukere[cid]["last"] == cid){
+	  	    brukere[cid]["logg"] += data["message"];	
+	  	} else {
+	  	   brukere[cid]["logg"] += "<span style='font-weight: bold; border-bottom: solid black;'">+navn+"</span>+data["message"]";
+	  	}
+	  }
+	  brukere[cid]["last"] = cid;
+	  io.cid.send("message_to_client",{ message: brukere[cid]["logg"] });
   });
   socket.on('message_to_server2',function(data){
 	  console.log("MSG: "+data["message"]+"ID: "+socket.id);
