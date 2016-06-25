@@ -35,6 +35,7 @@ io.on('connection', function(socket){
   socket.on('hent_brukere', function(data) {
 	  var bruker_liste = "";
 	  var bruker_ider = Object.keys(brukere);
+	  console.log(bruker_ider);
 	  for (var nr = 0; nr < bruker_ider.length+1; nr++){
 	  	if (bruker_ider[nr] != socket.id && bruker_ider[nr] != null){
 	  		if (bruker_liste == "") {
