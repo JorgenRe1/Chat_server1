@@ -88,7 +88,8 @@ io.on('connection', function(socket){
           io.to(user_id).emit('message_to_client',{message: logg});
   });
   socket.on('hent_chat',function(data){
-      io.to(socket.id).emit('bruker_chat',{message:brukere[data["user_id"]["logg"]]});
+      var user = data["user_id"];
+      io.to(socket.id).emit('bruker_chat',{message:brukere[user]["logg"]});
   });
   //Når en bruker logger av
   socket.on('disconnect', function(){
