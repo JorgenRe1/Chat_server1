@@ -35,13 +35,13 @@ io.on('connection', function(socket){
   socket.on('hent_brukere', function(data) {
 	  var bruker_liste = "";
 	  var bruker_ider = Object.keys(brukere);
-	  for (var nr = 0; nr < bruker_ider.length; nr++){
-	  	if (bruker_ider[nr] != socket.id){
+	  for (var nr = 0; nr < bruker_ider.length+1; nr++){
+	  	if (bruker_ider[nr] != socket.id && bruker_ider[nr] != null){
 	  		if (bruker_liste == "") {
 	  			var bruker_navn = brukere[bruker_ider[nr]]["navn"];
 	  			bruker_liste = "<input type='button' value='"+bruker_navn;
 	  			bruker_liste +="'onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\")' style='width:100%'>";
-	  		} else {
+	  		} else if (bruker_ider[nr] != null){
 	  			var bruker_navn = brukere[bruker_ider[nr]]["navn"];
 	  			bruker_liste += "<br><input type='button' value='"+bruker_navn;
 	  			bruker_liste +="'onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\")' style='width:100%>'";
