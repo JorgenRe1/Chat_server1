@@ -17,6 +17,12 @@ var brukere = [];
 
 io.on('connection', function(socket){
   console.log('a user connected');
+    socket.on('ny_bruker', function(data) {
+    	console.log("Ny bruker");
+	brukere[cid] = [];
+	brukere[cid]["last"] = cid;
+	brukere[cid]["navn"] = navn;
+    });
   //Når en melding blir sendt til server
   socket.on('message_all', function(data) {
 	  //send til alle tilkoblede brukerne
@@ -57,7 +63,7 @@ io.on('connection', function(socket){
 	  	if (brukere[cid]["last"] == cid){
 	  	    brukere[cid]["logg"] += "<br>&nbsp"+data["message"];	
 	  	} else {
-	  	   brukere[cid]["logg"] += "<br><span style='font-weight: bold; border-bottom: solid black;'>"+navn+"</span><br>"+data["message"];
+	  	   brukere[cid]["logg"] += "<br><span style='font-weight: bold; border-bottom: solid black;'>"+navn+"</span><br>&nbsp"+data["message"];
 	  	}
 	  }
 	  brukere[cid]["last"] = cid;
@@ -66,13 +72,21 @@ io.on('connection', function(socket){
   });
   
   //når admin chatter så må chatt logg objectet sendes til admin og bruker som hjelpes
-  /*socket.on('admin_to_user',function(data){
+  socket.on('admin_to_user',function(data){
 	  var user_id = data["user_id"];
 	  var admin_id = socket.id;
-          io.to(admin_id).emit('message_to_client',{message:data["message"]});
-  }); */
+	 
+	  if (brukere[user_id]["last"] == admin_id){
+	        brukere[user_id]["logg"] += "<br>&nbsp"+data["message"];	
+	  } else {
+	  	brukere[user_id]["logg"] += "<br><span style='font-weight: bold; border-bottom: solid black;'>"+brukere[admin_id]["navn"]+"</span><br>&nbsp"+data["message"];
+	  }
+	  var logg = brukere[user_id]["logg"];
+          io.to(admin_id).emit('message_to_client',{message: logg});
+          io.to(user_id).emit('message_to_client',{message: logg});
+  });
   socket.on('message_to_server2',function(data){
-	  console.log("MSG: "+data["message"]+"ID: "+socket.id);
+      console.log("MSG: "+data["message"]+"ID: "+socket.id);
       io.to(socket.id).emit('message_to_client',{message:data["message"]});
   });
   //Når en bruker logger av
