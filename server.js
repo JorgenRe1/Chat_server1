@@ -40,7 +40,7 @@ io.on('connection', function(socket){
 	  		if (bruker_liste == "") {
 	  			var bruker_navn = brukere[bruker_ider[nr]]["navn"];
 	  			bruker_liste = "<input type='button' value='"+bruker_navn;
-	  			bruker_liste +="'onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\")'>";
+	  			bruker_liste +="'onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\")' style='width:100%'>";
 	  		} else {
 	  			var bruker_navn = brukere[bruker_ider[nr]]["navn"];
 	  			bruker_liste += "<br><input type='button' value='"+bruker_navn;
