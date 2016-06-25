@@ -22,6 +22,22 @@ io.on('connection', function(socket){
 	  //send til alle tilkoblede brukerne
         io.sockets.emit("message_to_client",{ message: data["message"] });
     });
+   //Hente alle brukere som er logget paa
+  socket.on('hent_brukere', function(data) {
+	  var bruker_liste = "";
+	  var bruker_ider = Object.keys(brukere);
+	  for (var nr = 0; nr < bruker_ider.length; nr++){
+	  	if (bruker_ider[nr] != socket.id){
+	  		if (bruker_liste == "") {
+	  			bruker_liste = "<li>"+brukere[bruker_ider[nr]]["navn"]+"</li>";
+	  		} else {
+	  			bruker_liste += "<li>"+brukere[bruker_ider[nr]]["navn"]+"</li>";
+	  		}
+	  	}
+	  }
+        io.to(socket.id).emit("bruker_liste",{ message: bruker_liste });
+    });
+    //Når bruker chatter:
   socket.on('message_to_server', function (data) {
 	  var cid = socket.id;
 	  var navn = data["navn"];
@@ -30,7 +46,8 @@ io.on('connection', function(socket){
 	  	console.log("Ny bruker");
 	  	brukere[cid] = [];
 	  	brukere[cid]["last"] = cid;
-	  	brukere[cid]["logg"] = "<span style='font-weight: bold; border-bottom: solid black;'>"+navn+"</span><br> "+data["message"];
+	  	brukere[cid]["navn"] = navn;
+	  	brukere[cid]["logg"] = "<span style='font-weight: bold; border-bottom: solid black;'>"+navn+"</span><br>&nbsp"+data["message"];
 	  } else {
 	  	console.log("Naa: "+cid+" Last: "+brukere[cid]["last"]);
 	  	console.log("MSG: "+data["message"]);
@@ -44,6 +61,13 @@ io.on('connection', function(socket){
 	  console.log("Sender melding til: "+cid);
 	  io.to(cid).emit('message_to_client',{message: brukere[cid]["logg"]});
   });
+  
+  //når admin chatter så må chatt logg objectet sendes til admin og bruker som hjelpes
+  /*socket.on('admin_to_user',function(data){
+	  var user_id = data["user_id"];
+	  var admin_id = socket.id;
+          io.to(admin_id).emit('message_to_client',{message:data["message"]});
+  }); */
   socket.on('message_to_server2',function(data){
 	  console.log("MSG: "+data["message"]+"ID: "+socket.id);
       io.to(socket.id).emit('message_to_client',{message:data["message"]});
