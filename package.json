@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "Echo \"Error: no text specified\" && exit 1",
-    "start:" "node server.js"
+    "start": "node server.js"
   },
   "author": "JorgenRe",
   "dependencies": {},
