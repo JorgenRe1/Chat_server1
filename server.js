@@ -9,7 +9,7 @@ var app = http.createServer(function (request, response) {
         response.write(data);
         response.end();
     });
-}).listen(port, '176.34.102.205');
+}).listen(port);
  
 var io = require('socket.io').listen(app);
 
