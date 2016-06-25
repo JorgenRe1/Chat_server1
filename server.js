@@ -26,8 +26,9 @@ io.on('connection', function(socket){
 	  var cid = socket.id;
 	  var navn = data["navn"];
 	  console.log("ID"+cid);
-	  if (brukere[cid] != null){
+	  if (brukere[cid] == null){
 	  	brukere[cid] = [];
+	  	brukere[cid]["last"] = cid;
 	  	brukere[cid]["logg"] = "<span style='font-weight: bold; border-bottom: solid black;'>"+navn+"</span><br>"+data["message"];
 	  } else {
 	  	if (brukere[cid]["last"] == cid){
