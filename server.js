@@ -32,6 +32,7 @@ io.on('connection', function(socket){
 	  	brukere[cid]["last"] = cid;
 	  	brukere[cid]["logg"] = "<span style='font-weight: bold; border-bottom: solid black;'>"+navn+"</span><br>"+data["message"];
 	  } else {
+	  	console.log("Naa: "+cid+" Last: "brukere[cid]["last"]);
 	  	console.log("MSG: "+data["message"]);
 	  	if (brukere[cid]["last"] == cid){
 	  	    brukere[cid]["logg"] += data["message"];	
