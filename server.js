@@ -44,7 +44,7 @@ io.on('connection', function(socket){
 	  		} else {
 	  			var bruker_navn = brukere[bruker_ider[nr]]["navn"];
 	  			bruker_liste += "<br><input type='button' value='"+bruker_navn;
-	  			bruker_liste +="'onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\")'>";
+	  			bruker_liste +="'onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\")' style='width:100%>";
 	  		}
 	  	}
 	  }
