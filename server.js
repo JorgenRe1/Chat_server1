@@ -30,12 +30,12 @@ io.on('connection', function(socket){
 	  	console.log("Ny bruker");
 	  	brukere[cid] = [];
 	  	brukere[cid]["last"] = cid;
-	  	brukere[cid]["logg"] = "<span style='font-weight: bold; border-bottom: solid black;'>"+navn+"</span><br>"+data["message"];
+	  	brukere[cid]["logg"] = "<span style='font-weight: bold; border-bottom: solid black;'>"+navn+"</span><br> "+data["message"];
 	  } else {
 	  	console.log("Naa: "+cid+" Last: "+brukere[cid]["last"]);
 	  	console.log("MSG: "+data["message"]);
 	  	if (brukere[cid]["last"] == cid){
-	  	    brukere[cid]["logg"] += data["message"];	
+	  	    brukere[cid]["logg"] += "<br> "+data["message"];	
 	  	} else {
 	  	   brukere[cid]["logg"] += "<br><span style='font-weight: bold; border-bottom: solid black;'>"+navn+"</span><br>"+data["message"];
 	  	}
