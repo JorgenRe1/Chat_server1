@@ -41,7 +41,7 @@ io.on('connection', function(socket){
 	  }
 	  brukere[cid]["last"] = cid;
 	  console.log("Sender melding til: "+cid);
-	  io.sockets.cid.emit("message_to_client",{ message: "tr" });
+	  io.to(cid).emit('message_to_client',{message: brukere[cid]["logg"]});
   });
   socket.on('message_to_server2',function(data){
 	  console.log("MSG: "+data["message"]+"ID: "+socket.id);
