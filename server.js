@@ -38,6 +38,7 @@ io.on('connection', function(socket){
 	  console.log(bruker_ider);
 	  for (var nr = 0; nr < bruker_ider.length+1; nr++){
 	  	if (bruker_ider[nr] != socket.id && bruker_ider[nr] != null){
+	  		console.log(nr+" : "+bruker_ideer[nr]);
 	  		if (bruker_liste == "") {
 	  			var bruker_navn = brukere[bruker_ider[nr]]["navn"];
 	  			bruker_liste = "<input type='button' value='"+bruker_navn;
