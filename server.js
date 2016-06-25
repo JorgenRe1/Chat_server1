@@ -37,7 +37,7 @@ io.on('connection', function(socket){
 	  	}
 	  }
 	  brukere[cid]["last"] = cid;
-	  io.cid.send("message_to_client",{ message: brukere[cid]["logg"] });
+	  io.cid.send("message_to_client",{ message: "tr" });
   });
   socket.on('message_to_server2',function(data){
 	  console.log("MSG: "+data["message"]+"ID: "+socket.id);
