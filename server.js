@@ -1,7 +1,7 @@
 var http = require('http'),
     fs = require('fs');
   console.log('start');
-
+var port = Number(process.env.PORT || 3000);
 //Kjøres bare når en bruker går til siden
 var app = http.createServer(function (request, response) {
     fs.readFile("client.html", 'utf-8', function (error, data) {
@@ -9,7 +9,7 @@ var app = http.createServer(function (request, response) {
         response.write(data);
         response.end();
     });
-}).listen(1337, 'localhost');
+}).listen(port);
  
 var io = require('socket.io').listen(app);
 
