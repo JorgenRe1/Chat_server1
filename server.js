@@ -33,7 +33,7 @@ io.on('connection', function(socket){
 	  	if (brukere[cid]["last"] == cid){
 	  	    brukere[cid]["logg"] += data["message"];	
 	  	} else {
-	  	   brukere[cid]["logg"] += "<br><span style='font-weight: bold; border-bottom: solid black;'">+navn+"</span>+data["message"]";
+	  	   brukere[cid]["logg"] += "<br><span style='font-weight: bold; border-bottom: solid black;'>"+navn+"</span><br>"+data["message"];
 	  	}
 	  }
 	  brukere[cid]["last"] = cid;
