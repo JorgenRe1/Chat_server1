@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Chat server",
   "engines": {
-    "node": "5.9.1"
+    "node": "6.2.0"
   },
   "main": "server.js",
   "scripts": {
@@ -14,7 +14,12 @@
     "url": "https://github.com/JorgenRe1/Chat_server1"
   },
   "author": "JorgenRe",
-  "dependencies": {},
+  "dependencies": {
+    "bufferutil": "1.2.1",
+    "express": "4.13.4",
+    "utf-8-validate": "1.2.1",
+    "ws": "1.1.0"
+  }
   "keywords": [
     "node",
     "server",
