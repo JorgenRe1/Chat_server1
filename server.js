@@ -25,12 +25,14 @@ io.on('connection', function(socket){
   socket.on('message_to_server', function (data) {
 	  var cid = socket.id;
 	  var navn = data["navn"];
-	  console.log("ID"+cid);
+	  console.log("ID: "+cid);
 	  if (brukere[cid] == null){
+	  	console.log("Ny bruker");
 	  	brukere[cid] = [];
 	  	brukere[cid]["last"] = cid;
 	  	brukere[cid]["logg"] = "<span style='font-weight: bold; border-bottom: solid black;'>"+navn+"</span><br>"+data["message"];
 	  } else {
+	  	console.log("MSG: "+data["message"]);
 	  	if (brukere[cid]["last"] == cid){
 	  	    brukere[cid]["logg"] += data["message"];	
 	  	} else {
@@ -38,6 +40,7 @@ io.on('connection', function(socket){
 	  	}
 	  }
 	  brukere[cid]["last"] = cid;
+	  console.log("Sender melding til: "+cid);
 	  io.sockets.cid.emit("message_to_client",{ message: "tr" });
   });
   socket.on('message_to_server2',function(data){
