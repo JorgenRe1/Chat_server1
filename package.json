@@ -1,0 +1,9 @@
+{
+  "name": "socket-chat",
+  "version": "0.0.1",
+  "description": "socket.io app",
+  "main": "server.js",
+  "dependencies": {},
+  "license": "none",
+  "repository": ""
+}
