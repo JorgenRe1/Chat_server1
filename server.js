@@ -82,13 +82,13 @@ io.on('connection', function(socket){
 	  } else {
 	  	brukere[user_id]["logg"] += "<br><span style='font-weight: bold; border-bottom: solid black;'>"+brukere[admin_id]["navn"]+"</span><br>&nbsp"+data["message"];
 	  }
+	  brukere[user_id]["last"] = admin_id;
 	  var logg = brukere[user_id]["logg"];
           io.to(admin_id).emit('message_to_client',{message: logg});
           io.to(user_id).emit('message_to_client',{message: logg});
   });
-  socket.on('message_to_server2',function(data){
-      console.log("MSG: "+data["message"]+"ID: "+socket.id);
-      io.to(socket.id).emit('message_to_client',{message:data["message"]});
+  socket.on('hent_chat',function(data){
+      io.to(socket.id).emit('bruker_chat',{message:brukere[data["user_id"]["logg"]]});
   });
   //Når en bruker logger av
   socket.on('disconnect', function(){
