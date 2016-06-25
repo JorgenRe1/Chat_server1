@@ -28,12 +28,12 @@ io.on('connection', function(socket){
 	  console.log("ID"+cid);
 	  if (brukere[cid] != null){
 	  	brukere[cid] = [];
-	  	brukere[cid]["logg"] = "<span style='font-weight: bold; border-bottom: solid black;'">+navn+"</span>+data["message"]";
+	  	brukere[cid]["logg"] = "<span style='font-weight: bold; border-bottom: solid black;'>"+navn+"</span><br>"+data["message"];
 	  } else {
 	  	if (brukere[cid]["last"] == cid){
 	  	    brukere[cid]["logg"] += data["message"];	
 	  	} else {
-	  	   brukere[cid]["logg"] += "<span style='font-weight: bold; border-bottom: solid black;'">+navn+"</span>+data["message"]";
+	  	   brukere[cid]["logg"] += "<br><span style='font-weight: bold; border-bottom: solid black;'">+navn+"</span>+data["message"]";
 	  	}
 	  }
 	  brukere[cid]["last"] = cid;
