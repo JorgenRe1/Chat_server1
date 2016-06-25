@@ -1,8 +1,13 @@
 {
-  "name": "socket-chat",
+  "name": "filmveksthuset-chat",
   "version": "0.0.1",
-  "description": "socket.io app",
+  "description": "Chat server",
   "main": "server.js",
+  "scripts": {
+    "test": "Echo \"Error: no text specified\" && exit 1",
+    "start:" "node server.js"
+  },
+  "author": "JorgenRe",
   "dependencies": {},
   "license": "none",
   "repository": ""
