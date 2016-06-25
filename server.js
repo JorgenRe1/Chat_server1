@@ -29,9 +29,12 @@ io.on('connection', function(socket){
 	  for (var nr = 0; nr < bruker_ider.length; nr++){
 	  	if (bruker_ider[nr] != socket.id){
 	  		if (bruker_liste == "") {
-	  			bruker_liste = "<li>"+brukere[bruker_ider[nr]]["navn"]+"</li>";
+	  			var bruker_navn = brukere[bruker_ider[nr]]["navn"];
+	  			bruker_liste = "<input type='button' value='"+bruker_navn;
+	  			bruker_liste +="'onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\")'>";
 	  		} else {
-	  			bruker_liste += "<li>"+brukere[bruker_ider[nr]]["navn"]+"</li>";
+	  			bruker_liste += "<br><input type='button' value='"+bruker_navn;
+	  			bruker_liste +="'onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\")'>";
 	  		}
 	  	}
 	  }
