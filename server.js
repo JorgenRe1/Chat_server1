@@ -19,9 +19,12 @@ io.on('connection', function(socket){
   console.log('a user connected');
     socket.on('ny_bruker', function(data) {
     	console.log("Ny bruker");
+    	var cid = socket.id;
+        var navn = data["navn"];
 	brukere[cid] = [];
 	brukere[cid]["last"] = cid;
 	brukere[cid]["navn"] = navn;
+	brukere[cid]["logg"] = "";
     });
   //Når en melding blir sendt til server
   socket.on('message_all', function(data) {
