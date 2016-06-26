@@ -48,12 +48,12 @@ io.on('connection', function(socket){
 	  			var bruker_navn = brukere[bruker_ider[nr]]["navn"];
 	  			var fbid = brukere[cid]["fbid"];
 	  			bruker_liste = "<button";
-	  			bruker_liste +=" onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\", \""+fbid+"\")' class='chat_med_btn'>"+bruker_navn+"</button>";
+	  			//bruker_liste +=" onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\", \""+fbid+"\")' class='chat_med_btn'>"+bruker_navn+"</button>";
 	  		} else if (bruker_ider[nr] != null){
 	  			var bruker_navn = brukere[bruker_ider[nr]]["navn"];
 	  			var fbid = brukere[cid]["fbid"];
 	  			bruker_liste += "<br><button";
-	  			bruker_liste +=" onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\", \""+fbid+"\")' class='chat_med_btn'>"+bruker_navn+"</button>";
+	  			//bruker_liste +=" onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\", \""+fbid+"\")' class='chat_med_btn'>"+bruker_navn+"</button>";
 	  		}
 	  	}
 	  }
