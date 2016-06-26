@@ -29,6 +29,7 @@ io.on('connection', function(socket){
 	brukere[cid]["fbid"] = fbid;
 	brukere[cid]["last"] = "keine";
 	brukere[cid]["logg"] = "";
+	console.log("Ny bruker registrering ferdig");
     });
   //Når en melding blir sendt til server
   socket.on('message_all', function(data) {
@@ -102,6 +103,7 @@ io.on('connection', function(socket){
           io.to(admin_id).emit('message_to_client',{message: logg, from: "self"});
           io.to(user_id).emit('message_to_client',{message: logg, from: brukere[admin_id]["navn"]});
   });
+  
   socket.on('hent_chat',function(data){
       var user = data["user_id"];
       io.to(socket.id).emit('bruker_chat',{message:brukere[user]["logg"]});
