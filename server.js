@@ -22,7 +22,7 @@ io.on('connection', function(socket){
     	console.log("Ny bruker");
     	var cid = socket.id;
         var navn = data["navn"];
-        var fb_id = data["fb_id"];
+        var fb_id = "123";
         console.log("FB: "+fb_id);
 	brukere[cid] = [];
 	brukere[cid]["navn"] = navn;
