@@ -114,6 +114,6 @@ io.on('connection', function(socket){
   //Når en bruker logger av
   socket.on('disconnect', function(){
     console.log('user disconnected. ID: '+socket.id);
-    brukere[socket.id]["status"] = false;	
+    if (brukere[socket.id] != null ) brukere[socket.id]["status"] = false;	
   });
 });
