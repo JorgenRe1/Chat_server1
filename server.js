@@ -24,6 +24,7 @@ io.on('connection', function(socket){
         var navn = data["navn"];
 	brukere[cid] = [];
 	brukere[cid]["navn"] = navn;
+	brukere[cid]["fb_id"] = data["fb_id"];
 	brukere[cid]["last"] = "keine";
 	brukere[cid]["logg"] = "";
     });
@@ -43,11 +44,11 @@ io.on('connection', function(socket){
 	  		if (bruker_liste == "") {
 	  			var bruker_navn = brukere[bruker_ider[nr]]["navn"];
 	  			bruker_liste = "<button";
-	  			bruker_liste +=" onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\")' class='chat_med_btn'>"+bruker_navn+"</button>";
+	  			bruker_liste +=" onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\", \""+brukere[cid]["fb_id"]+"\")' class='chat_med_btn'>"+bruker_navn+"</button>";
 	  		} else if (bruker_ider[nr] != null){
 	  			var bruker_navn = brukere[bruker_ider[nr]]["navn"];
 	  			bruker_liste += "<br><button";
-	  			bruker_liste +=" onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\")' class='chat_med_btn'>"+bruker_navn+"</button>";
+	  			bruker_liste +=" onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\", \""+brukere[cid]["fb_id"]+"\")' class='chat_med_btn'>"+bruker_navn+"</button>";
 	  		}
 	  	}
 	  }
@@ -79,6 +80,7 @@ io.on('connection', function(socket){
 	  console.log("Sender melding til: "+cid);
 	  io.to(cid).emit('message_to_client',{message: brukere[cid]["logg"], from: "self"});
 	  //Send saa til admin som kan da bli notifisert om at det chattes
+	  io.sockets.emit("notify_admin",{ message: cid });
   });
   
   //når admin chatter så må chatt logg objectet sendes til admin og bruker som hjelpes
