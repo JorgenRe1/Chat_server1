@@ -24,7 +24,7 @@ io.on('connection', function(socket){
       	var cid = socket.id;
       	var fb_id = data["fb_id"];
       	cid_fb[cid] = fb_id; 
-    	if(brukere[cid] == null){
+    	if(brukere[fb_id] == null){
          var navn = data["navn"];
          console.log("FB: "+fb_id);
 	 brukere[fb_id] = [];
@@ -77,7 +77,7 @@ io.on('connection', function(socket){
 	  	    brukere[fb_id]["logg"] += "<br>&nbsp"+data["message"];	
 	  	} else {
 	  	   if (logg != "") brukere[fb_id]["logg"] += "<br>";
-	  	   brukere[fb_id]["logg"] += "<span style='font-weight: bold; border-bottom: solid black;'>"+brukere[cid]["navn"]+"</span><br>&nbsp"+data["message"];
+	  	   brukere[fb_id]["logg"] += "<span style='font-weight: bold; border-bottom: solid black;'>"+brukere[fb_id]["navn"]+"</span><br>&nbsp"+data["message"];
 	  	}
 	  	var msg_t = brukere[fb_id]["logg"];
 	  }
