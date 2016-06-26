@@ -93,16 +93,16 @@ io.on('connection', function(socket){
   	  var fb_id = data["user_id"];
 	  var user_id = brukere[fb_id]["cid"];
 	  var admin_id = socket.id;
-	 
+	  var admin_fb = cid_fb[admin_id];
 	  if (brukere[fb_id]["last"] == admin_id){
 	        brukere[fb_id]["logg"] += "<br>&nbsp"+data["message"];	
 	  } else {
 	  	brukere[fb_id]["logg"] += "<br><span style='font-weight: bold; border-bottom: solid black;'>"+brukere[admin_id]["navn"]+"</span><br>&nbsp"+data["message"];
 	  }
-	  brukere[fb_id]["last"] = admin_id;
+	  brukere[fb_id]["last"] = admin_fb;
 	  var logg = brukere[user_id]["logg"];
           io.to(admin_id).emit('message_to_client',{message: logg, from: "self"});
-          io.to(user_id).emit('message_to_client',{message: logg, from: brukere[admin_id]["navn"]});
+          io.to(user_id).emit('message_to_client',{message: logg, from: brukere[admin_fb]["navn"]});
   });
   
   socket.on('hent_chat',function(data){
