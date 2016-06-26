@@ -14,6 +14,7 @@ var app = http.createServer(function (request, response) {
 var io = require('socket.io').listen(app);
 
 var brukere = [];
+var chatter = [];
 
 io.on('connection', function(socket){
   console.log('a user connected');
@@ -42,11 +43,11 @@ io.on('connection', function(socket){
 	  		if (bruker_liste == "") {
 	  			var bruker_navn = brukere[bruker_ider[nr]]["navn"];
 	  			bruker_liste = "<input type='button' value='"+bruker_navn;
-	  			bruker_liste +="'onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\")' style='width:100%'>";
+	  			bruker_liste +="'onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\")' class='chat_med_btn'>";
 	  		} else if (bruker_ider[nr] != null){
 	  			var bruker_navn = brukere[bruker_ider[nr]]["navn"];
 	  			bruker_liste += "<br><input type='button' value='"+bruker_navn;
-	  			bruker_liste +="'onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\")' style='width:100%'>";
+	  			bruker_liste +="'onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\")' class='chat_med_btn'>";
 	  		}
 	  	}
 	  }
