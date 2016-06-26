@@ -78,6 +78,7 @@ io.on('connection', function(socket){
 	  brukere[cid]["last"] = cid;
 	  console.log("Sender melding til: "+cid);
 	  io.to(cid).emit('message_to_client',{message: brukere[cid]["logg"], from: "self"});
+	  //Send saa til admin som kan da bli notifisert om at det chattes
   });
   
   //når admin chatter så må chatt logg objectet sendes til admin og bruker som hjelpes
