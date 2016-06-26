@@ -74,6 +74,7 @@ io.on('connection', function(socket){
 	  	brukere[cid]["last"] = cid;
 	  	brukere[cid]["navn"] = navn;
 	  	brukere[cid]["logg"] = "<span style='font-weight: bold; border-bottom: solid black;'>"+navn+"</span><br>&nbsp"+data["message"];
+	        brukere[cid]["status"] = true;
 	  } else {
 	  	console.log("Naa: "+cid+" Last: "+brukere[cid]["last"]);
 	  	console.log("MSG: "+data["message"]);
