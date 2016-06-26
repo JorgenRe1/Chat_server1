@@ -42,12 +42,12 @@ io.on('connection', function(socket){
 	  		console.log(nr+" : "+bruker_ider[nr]);
 	  		if (bruker_liste == "") {
 	  			var bruker_navn = brukere[bruker_ider[nr]]["navn"];
-	  			bruker_liste = "<input type='button' value='"+bruker_navn;
-	  			bruker_liste +="'onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\")' class='chat_med_btn'>";
+	  			bruker_liste = "<button";
+	  			bruker_liste +=" onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\")' class='chat_med_btn'>"+bruker_navn+"</button>";
 	  		} else if (bruker_ider[nr] != null){
 	  			var bruker_navn = brukere[bruker_ider[nr]]["navn"];
-	  			bruker_liste += "<br><input type='button' value='"+bruker_navn;
-	  			bruker_liste +="'onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\")' class='chat_med_btn'>";
+	  			bruker_liste += "<br><button";
+	  			bruker_liste +=" onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\")' class='chat_med_btn'>"+bruker_navn+"</button>";
 	  		}
 	  	}
 	  }
