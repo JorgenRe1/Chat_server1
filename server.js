@@ -91,7 +91,7 @@ io.on('connection', function(socket){
   //når admin chatter så må chatt logg objectet sendes til admin og bruker som hjelpes
   socket.on('admin_to_user',function(data){
   	  var user_fb = data["user_fb"];
-	  var user_id = brukere[fb_id]["cid"];
+	  var user_id = brukere[user_fb]["cid"];
 	  var admin_id = socket.id;
 	  var admin_fb = cid_fb[admin_id];
 	  if (brukere[user_fb]["last"] == admin_fb){
