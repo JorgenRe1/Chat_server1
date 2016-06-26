@@ -90,7 +90,7 @@ io.on('connection', function(socket){
   
   //når admin chatter så må chatt logg objectet sendes til admin og bruker som hjelpes
   socket.on('admin_to_user',function(data){
-  	  var user_fb = data["user_id"];
+  	  var user_fb = data["user_fb"];
 	  var user_id = brukere[fb_id]["cid"];
 	  var admin_id = socket.id;
 	  var admin_fb = cid_fb[admin_id];
@@ -101,6 +101,7 @@ io.on('connection', function(socket){
 	  }
 	  brukere[user_fb]["last"] = admin_fb;
 	  var logg = brukere[user_fb]["logg"];
+	  console.log("logg: "+logg+"user: "+user_id+" admin: "+admin_id);
           io.to(admin_id).emit('message_to_client',{message: logg, from: "self"});
           io.to(user_id).emit('message_to_client',{message: logg, from: brukere[admin_fb]["navn"]});
   });
