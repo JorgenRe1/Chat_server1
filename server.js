@@ -50,17 +50,20 @@ io.on('connection', function(socket){
    
    //Hente alle brukere som er logget paa
   socket.on('hent_brukere', function(data) {
+  	  console.log("Henter liste");
 	  var bruker_liste = "";
 	  //Hente alle facebook idean
 	  var bruker_ider = Object.keys(brukere);
 	  for (var nr = 0; nr < bruker_ider.length+1; nr++){
 	  	if (bruker_ider[nr] != cid_fb[socket.id] && bruker_ider[nr] != null && brukere[bruker_ider[nr]]["status"]){
-	  		if (bruker_liste == "") {
+	  		if (bruker_liste == "" && bruker_ider[nr] != null) {
+	  			console.log("Navn: "+brukere[bruker_ider[nr]]["navn"]);
 	  			var bruker_navn = brukere[bruker_ider[nr]]["navn"];
 	  			bruker_liste = "<button id='btn_"+bruker_ider[nr]+"'";
 	  			bruker_liste +=" onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\", \""+bruker_ider[nr]+"\")' class='chat_med_btn'>"+bruker_navn+"</button>";
 	  		} else if (bruker_ider[nr] != null){
 	  			var bruker_navn = brukere[bruker_ider[nr]]["navn"];
+	  			console.log("Navn: "+brukere[bruker_ider[nr]]["navn"]);
 	  			bruker_liste += "<br><button id='btn_"+bruker_ider[nr]+"'";
 	  			bruker_liste +=" onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\", \""+bruker_ider[nr]+"\")' class='chat_med_btn'>"+bruker_navn+"</button>";
 	  		}
