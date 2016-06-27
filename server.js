@@ -34,12 +34,12 @@ io.on('connection', function(socket){
 	 brukere[fb_id]["logg"] = "";
     	}
     	brukere[fb_id]["status"] = true;	
-    	io.to(cid).emit("bruker_liste",{ message: brukere[fb_id]["logg"] });
+    	io.to(cid).emit("tidligere_meldinge",{ message: brukere[fb_id]["logg"] });
     });
   //Når en melding skal sendes til alle
   socket.on('message_all', function(data) {
 	  //send til alle tilkoblede brukerne
-        io.sockets.emit("tidligere_meldinge",{ message: data["message"] });
+        io.sockets.emit("message_to_client",{ message: data["message"] });
     });
    
    //Hente alle brukere som er logget paa
