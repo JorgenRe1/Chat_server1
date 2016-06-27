@@ -111,6 +111,8 @@ io.on('connection', function(socket){
   
   socket.on('hent_chat',function(data){
       var user = data["user_id"];
+      var msg_t = "";
+      if (brukere[user] != null) msg_t = brukere[user]["logg"];
       io.to(socket.id).emit('bruker_chat',{message:brukere[user]["logg"]});
   });
   //Når en bruker logger av
