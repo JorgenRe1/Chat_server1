@@ -113,7 +113,7 @@ io.on('connection', function(socket){
       var user = data["user_id"];
       var msg_t = "";
       if (brukere[user] != null) msg_t = brukere[user]["logg"];
-      io.to(socket.id).emit('bruker_chat',{message:brukere[user]["logg"]});
+      io.to(socket.id).emit('bruker_chat',{message: msg_t});
   });
   //Når en bruker logger av
   socket.on('disconnect', function(){
