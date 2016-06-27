@@ -34,11 +34,11 @@ io.on('connection', function(socket){
 	 brukere[fb_id]["logg"] = "";
     	}
     	brukere[fb_id]["status"] = true;
-    	var msg_t = "";
+    /*	var msg_t = "";
     	if (brukere[fb_id] != null) {
     	    if (brukere[fb_id]["logg"] != null) msg_t = brukere[fb_id]["logg"];
     	}
-    	io.to(cid).emit("tidligere_meldinge",{ message: msg_t });
+    	io.to(cid).emit("tidligere_meldinge",{ message: msg_t });*/
     });
   //Når en melding skal sendes til alle
   socket.on('message_all', function(data) {
