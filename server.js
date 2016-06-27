@@ -110,7 +110,7 @@ io.on('connection', function(socket){
 	  brukere[user_fb]["last"] = admin_fb;
 	  var logg = brukere[user_fb]["logg"];
           io.to(admin_id).emit('message_to_client',{message: logg, from: "self"});
-          io.to(user_id).emit('message_to_client',{message: logg, from: brukere[admin_fb]["navn"]});
+          io.to(user_id).emit('message_to_client',{message: logg, from: "self"});
   });
   
   socket.on('hent_chat',function(data){
