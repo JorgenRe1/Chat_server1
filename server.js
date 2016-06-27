@@ -33,6 +33,8 @@ io.on('connection', function(socket){
 	 brukere[fb_id]["last"] = "keine";
 	 brukere[fb_id]["logg"] = "";
     	}
+    	brukere[fb_id]["navn"] = navn;
+    	brukere[fb_id]["cid"] = cid;
     	brukere[fb_id]["status"] = true;
     /*	var msg_t = "";
     	if (brukere[fb_id] != null) {
