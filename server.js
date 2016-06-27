@@ -18,13 +18,13 @@ var chatter = [];
 var cid_fb = [];
 io.on('connection', function(socket){
   console.log('a user connected');
-  
     socket.on('ny_bruker', function(data) {
-    	console.log("Ny bruker");
       	var cid = socket.id;
       	var fb_id = data["fb_id"];
       	cid_fb[cid] = fb_id; 
+      	console.log("Kanskje ny bruker");
     	if(brukere[fb_id] == null){
+    		console.log("Ny bruker");
          var navn = data["navn"];
          console.log("FB: "+fb_id);
 	 brukere[fb_id] = [];
@@ -33,14 +33,19 @@ io.on('connection', function(socket){
 	 brukere[fb_id]["last"] = "keine";
 	 brukere[fb_id]["logg"] = "";
     	}
-    	 brukere[fb_id]["status"] = true;	
-    	
+    	brukere[fb_id]["status"] = true;
+    /*	var msg_t = "";
+    	if (brukere[fb_id] != null) {
+    	    if (brukere[fb_id]["logg"] != null) msg_t = brukere[fb_id]["logg"];
+    	}
+    	io.to(cid).emit("tidligere_meldinge",{ message: msg_t });*/
     });
-  //Når en melding blir sendt til server
+  //Når en melding skal sendes til alle
   socket.on('message_all', function(data) {
 	  //send til alle tilkoblede brukerne
         io.sockets.emit("message_to_client",{ message: data["message"] });
     });
+   
    //Hente alle brukere som er logget paa
   socket.on('hent_brukere', function(data) {
 	  var bruker_liste = "";
@@ -50,11 +55,11 @@ io.on('connection', function(socket){
 	  	if (bruker_ider[nr] != cid_fb[socket.id] && bruker_ider[nr] != null && brukere[bruker_ider[nr]]["status"]){
 	  		if (bruker_liste == "") {
 	  			var bruker_navn = brukere[bruker_ider[nr]]["navn"];
-	  			bruker_liste = "<button";
+	  			bruker_liste = "<button id='btn_"+bruker_ider[nr]+"'";
 	  			bruker_liste +=" onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\", \""+bruker_ider[nr]+"\")' class='chat_med_btn'>"+bruker_navn+"</button>";
 	  		} else if (bruker_ider[nr] != null){
 	  			var bruker_navn = brukere[bruker_ider[nr]]["navn"];
-	  			bruker_liste += "<br><button";
+	  			bruker_liste += "<br><button id='btn_"+bruker_ider[nr]+"'";
 	  			bruker_liste +=" onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\", \""+bruker_ider[nr]+"\")' class='chat_med_btn'>"+bruker_navn+"</button>";
 	  		}
 	  	}
@@ -63,15 +68,18 @@ io.on('connection', function(socket){
     });
     //Når bruker chatter:
   socket.on('message_to_server', function (data) {
+  	var stop = false;
+  	if (check_message(data["message"])) stop = true;
 	  var cid = socket.id;
 	  var fb_id = cid_fb[cid];
 	  var navn = data["navn"];
 	  console.log("ID: "+cid);
 	  if (brukere[fb_id] == null){
               var msg_t = "ikke_registrert";
-	  } else {
+	  } else if(!stop) {
+	  	//Dersom bruker har blitt auto logget av
+	  	brukere[fb_id]["status"] = true;
 	  	var logg = brukere[fb_id]["logg"];
-	  	console.log("Naa: "+fb_id+" Last: "+brukere[fb_id]["last"]);
 	  	console.log("MSG: "+data["message"]);
 	  	if (brukere[fb_id]["last"] == fb_id){
 	  	    brukere[fb_id]["logg"] += "<br>&nbsp"+data["message"];	
@@ -83,9 +91,9 @@ io.on('connection', function(socket){
 	  }
 	  brukere[fb_id]["last"] = fb_id;
 	  console.log("Sender melding til: "+cid);
-	  io.to(cid).emit('message_to_client',{message: msg_t, from: "self"});
+	  if(!stop) io.to(cid).emit('message_to_client',{message: msg_t, from: "self"});
 	  //Send saa til admin som kan da bli notifisert om at det chattes
-	  //io.sockets.emit("notify_admin",{ message: cid });
+	  if(!stop) io.sockets.emit("notify_admin",{ message: fb_id });
   });
   
   //når admin chatter så må chatt logg objectet sendes til admin og bruker som hjelpes
@@ -101,19 +109,30 @@ io.on('connection', function(socket){
 	  }
 	  brukere[user_fb]["last"] = admin_fb;
 	  var logg = brukere[user_fb]["logg"];
-	  console.log("logg: "+logg+"user: "+user_id+" admin: "+admin_id);
           io.to(admin_id).emit('message_to_client',{message: logg, from: "self"});
           io.to(user_id).emit('message_to_client',{message: logg, from: brukere[admin_fb]["navn"]});
   });
   
   socket.on('hent_chat',function(data){
       var user = data["user_id"];
-      io.to(socket.id).emit('bruker_chat',{message:brukere[user]["logg"]});
+      var msg_t = "";
+      if (brukere[user] != null) msg_t = brukere[user]["logg"];
+      io.to(socket.id).emit('bruker_chat',{message: msg_t});
   });
   //Når en bruker logger av
   socket.on('disconnect', function(){
     console.log('user disconnected. ID: '+socket.id);
-    var user_id = cid_fb[socket.id];
-    if (brukere[user_id] != null ) brukere[user_id]["status"] = false;	
+    var user_fb = cid_fb[socket.id];
+    if (brukere[user_fb] != null ) brukere[user_fb]["status"] = false;	
   });
 });
+
+//teste meldinger
+function check_message(melding){
+   if(melding.indexOf("sex") > -1) return false;
+   if(melding.indexOf("penis") > -1) return false;
+   if(melding.indexOf("kill") > -1) return false;
+   if(melding.indexOf("død") > -1) return false;
+   if(melding.indexOf("faen") > -1) return false;
+   if(melding.indexOf("drepe") > -1) return false;
+}
