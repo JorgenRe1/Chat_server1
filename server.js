@@ -73,7 +73,6 @@ io.on('connection', function(socket){
 	  	//Dersom bruker har blitt auto logget av
 	  	brukere[fb_id]["status"] = true;
 	  	var logg = brukere[fb_id]["logg"];
-	  	console.log("Naa: "+fb_id+" Last: "+brukere[fb_id]["last"]);
 	  	console.log("MSG: "+data["message"]);
 	  	if (brukere[fb_id]["last"] == fb_id){
 	  	    brukere[fb_id]["logg"] += "<br>&nbsp"+data["message"];	
@@ -103,7 +102,6 @@ io.on('connection', function(socket){
 	  }
 	  brukere[user_fb]["last"] = admin_fb;
 	  var logg = brukere[user_fb]["logg"];
-	  console.log("logg: "+logg+"user: "+user_id+" admin: "+admin_id);
           io.to(admin_id).emit('message_to_client',{message: logg, from: "self"});
           io.to(user_id).emit('message_to_client',{message: logg, from: brukere[admin_fb]["navn"]});
   });
