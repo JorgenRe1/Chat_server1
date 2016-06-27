@@ -36,7 +36,7 @@ io.on('connection', function(socket){
     	 brukere[fb_id]["status"] = true;	
     	
     });
-  //Når en melding blir sendt til server
+  //Når en melding skal sendes til alle
   socket.on('message_all', function(data) {
 	  //send til alle tilkoblede brukerne
         io.sockets.emit("message_to_client",{ message: data["message"] });
@@ -50,11 +50,11 @@ io.on('connection', function(socket){
 	  	if (bruker_ider[nr] != cid_fb[socket.id] && bruker_ider[nr] != null && brukere[bruker_ider[nr]]["status"]){
 	  		if (bruker_liste == "") {
 	  			var bruker_navn = brukere[bruker_ider[nr]]["navn"];
-	  			bruker_liste = "<button";
+	  			bruker_liste = "<button id='btn_"+bruker_ider[nr]+"'";
 	  			bruker_liste +=" onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\", \""+bruker_ider[nr]+"\")' class='chat_med_btn'>"+bruker_navn+"</button>";
 	  		} else if (bruker_ider[nr] != null){
 	  			var bruker_navn = brukere[bruker_ider[nr]]["navn"];
-	  			bruker_liste += "<br><button";
+	  			bruker_liste += "<br><button id='btn_"+bruker_ider[nr]+"'";
 	  			bruker_liste +=" onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\", \""+bruker_ider[nr]+"\")' class='chat_med_btn'>"+bruker_navn+"</button>";
 	  		}
 	  	}
@@ -85,7 +85,7 @@ io.on('connection', function(socket){
 	  console.log("Sender melding til: "+cid);
 	  io.to(cid).emit('message_to_client',{message: msg_t, from: "self"});
 	  //Send saa til admin som kan da bli notifisert om at det chattes
-	  //io.sockets.emit("notify_admin",{ message: cid });
+	  io.sockets.emit("notify_admin",{ message: fb_id });
   });
   
   //når admin chatter så må chatt logg objectet sendes til admin og bruker som hjelpes
@@ -113,7 +113,7 @@ io.on('connection', function(socket){
   //Når en bruker logger av
   socket.on('disconnect', function(){
     console.log('user disconnected. ID: '+socket.id);
-    var user_id = cid_fb[socket.id];
-    if (brukere[user_id] != null ) brukere[user_id]["status"] = false;	
+    var user_fb = cid_fb[socket.id];
+    if (brukere[user_fb] != null ) brukere[user_fb]["status"] = false;	
   });
 });
