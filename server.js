@@ -39,7 +39,7 @@ io.on('connection', function(socket){
   //Når en melding skal sendes til alle
   socket.on('message_all', function(data) {
 	  //send til alle tilkoblede brukerne
-        io.sockets.emit("message_to_client",{ message: data["message"] });
+        io.sockets.emit("tidligere_meldinge",{ message: data["message"] });
     });
    
    //Hente alle brukere som er logget paa
