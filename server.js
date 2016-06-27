@@ -53,7 +53,6 @@ io.on('connection', function(socket){
 	  var bruker_liste = "";
 	  //Hente alle facebook idean
 	  var bruker_ider = Object.keys(brukere);
-	  console.log("brukere: "+bruker_ider);
 	  for (var nr = 0; nr < bruker_ider.length; nr++){
 	  	if (bruker_ider[nr] != cid_fb[socket.id] && bruker_ider[nr] != null && bruker_ider[nr] != "" && brukere[bruker_ider[nr]]["status"]){
 	  		if (bruker_liste == "" && brukere[bruker_ider[nr]] != null) {
