@@ -38,7 +38,6 @@ io.on('connection', function(socket){
     	if (brukere[fb_id] != null) {
     	    if (brukere[fb_id]["logg"] != null) msg_t = brukere[fb_id]["logg"];
     	}
-    	msg_t = "Hello";
     	io.to(cid).emit("tidligere_meldinge",{ message: msg_t });
     });
   //Når en melding skal sendes til alle
