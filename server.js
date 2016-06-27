@@ -13,15 +13,6 @@ var app = http.createServer(function (request, response) {
  
 var io = require('socket.io').listen(app);
 
-function check_message(melding){
-   if(melding.indexOf("sex") > -1) return false;
-   if(melding.indexOf("penis") > -1) return false;
-   if(melding.indexOf("kill") > -1) return false;
-   if(melding.indexOf("død") > -1) return false;
-   if(melding.indexOf("faen") > -1) return false;
-   if(melding.indexOf("drepe") > -1) return false;
-}
-
 var brukere = [];
 var chatter = [];
 var cid_fb = [];
@@ -128,3 +119,13 @@ io.on('connection', function(socket){
     if (brukere[user_fb] != null ) brukere[user_fb]["status"] = false;	
   });
 });
+
+//teste meldinger
+function check_message(melding){
+   if(melding.indexOf("sex") > -1) return false;
+   if(melding.indexOf("penis") > -1) return false;
+   if(melding.indexOf("kill") > -1) return false;
+   if(melding.indexOf("død") > -1) return false;
+   if(melding.indexOf("faen") > -1) return false;
+   if(melding.indexOf("drepe") > -1) return false;
+}
