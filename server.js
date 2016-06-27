@@ -74,6 +74,8 @@ io.on('connection', function(socket){
 	  if (brukere[fb_id] == null){
               var msg_t = "ikke_registrert";
 	  } else {
+	  	//Dersom bruker har blitt auto logget av
+	  	brukere[fb_id]["status"] = true;
 	  	var logg = brukere[fb_id]["logg"];
 	  	console.log("Naa: "+fb_id+" Last: "+brukere[fb_id]["last"]);
 	  	console.log("MSG: "+data["message"]);
