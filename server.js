@@ -98,7 +98,6 @@ io.on('connection', function(socket){
   
   //når admin chatter så må chatt logg objectet sendes til admin og bruker som hjelpes
   socket.on('admin_to_user',function(data){
-  	  console.log("Hei");
   	  var user_fb = data["user_fb"];
 	  var user_id = brukere[user_fb]["cid"];
 	  var admin_id = socket.id;
@@ -113,7 +112,7 @@ io.on('connection', function(socket){
 	  console.log("user_id: "+user_id);
           io.to(admin_id).emit('message_to_client',{message: logg, from: "self"});
           io.to(user_id).emit('message_to_client',{message: logg, from: "self"});
-          
+          console.log("Sent to user");
           //Send saa videre at hei det har blitt sett paa chatten til xyz
   });
   
