@@ -13,6 +13,15 @@ var app = http.createServer(function (request, response) {
  
 var io = require('socket.io').listen(app);
 
+function check_message(melding){
+   if(melding.indexOf("sex") > -1) return false;
+   if(melding.indexOf("penis") > -1) return false;
+   if(melding.indexOf("kill") > -1) return false;
+   if(melding.indexOf("død") > -1) return false;
+   if(melding.indexOf("faen") > -1) return false;
+   if(melding.indexOf("drepe") > -1) return false;
+}
+
 var brukere = [];
 var chatter = [];
 var cid_fb = [];
@@ -63,13 +72,15 @@ io.on('connection', function(socket){
     });
     //Når bruker chatter:
   socket.on('message_to_server', function (data) {
+  	var stop = false;
+  	if (!check_message(data["message"])) stop = true;
 	  var cid = socket.id;
 	  var fb_id = cid_fb[cid];
 	  var navn = data["navn"];
 	  console.log("ID: "+cid);
 	  if (brukere[fb_id] == null){
               var msg_t = "ikke_registrert";
-	  } else {
+	  } else if(!stop) {
 	  	//Dersom bruker har blitt auto logget av
 	  	brukere[fb_id]["status"] = true;
 	  	var logg = brukere[fb_id]["logg"];
@@ -84,9 +95,9 @@ io.on('connection', function(socket){
 	  }
 	  brukere[fb_id]["last"] = fb_id;
 	  console.log("Sender melding til: "+cid);
-	  io.to(cid).emit('message_to_client',{message: msg_t, from: "self"});
+	  if(!stop) io.to(cid).emit('message_to_client',{message: msg_t, from: "self"});
 	  //Send saa til admin som kan da bli notifisert om at det chattes
-	  io.sockets.emit("notify_admin",{ message: fb_id });
+	  if(!stop) io.sockets.emit("notify_admin",{ message: fb_id });
   });
   
   //når admin chatter så må chatt logg objectet sendes til admin og bruker som hjelpes
