@@ -23,15 +23,15 @@ io.on('connection', function(socket){
       	var fb_id = data["fb_id"];
       	cid_fb[cid] = fb_id; 
       	console.log("Kanskje ny bruker");
+      	var navn = data["navn"];
     	if(brukere[fb_id] == null){
-    		console.log("Ny bruker");
-         var navn = data["navn"];
-         console.log("FB: "+fb_id);
-	 brukere[fb_id] = [];
-	 brukere[fb_id]["navn"] = navn;
-	 brukere[fb_id]["cid"] = cid;
-	 brukere[fb_id]["last"] = "keine";
-	 brukere[fb_id]["logg"] = "";
+    	    console.log("Ny bruker");
+            console.log("FB: "+fb_id);
+	    brukere[fb_id] = [];
+	    brukere[fb_id]["navn"] = navn;
+	    brukere[fb_id]["cid"] = cid;
+            brukere[fb_id]["last"] = "keine";
+	    brukere[fb_id]["logg"] = "";
     	}
     	brukere[fb_id]["navn"] = navn;
     	brukere[fb_id]["cid"] = cid;
