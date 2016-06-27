@@ -18,7 +18,10 @@ var chatter = [];
 var cid_fb = [];
 io.on('connection', function(socket){
   console.log('a user connected');
-  
+  //Se om bruker har allerede vært logget på. I såfall logg på
+    socket.on('message_all', function(data) {
+	  if (brukere[data["fb_id"] != null]) brukere[data["fb_id"]["status"] = true;
+    });
     socket.on('ny_bruker', function(data) {
     	console.log("Ny bruker");
       	var cid = socket.id;
@@ -41,6 +44,7 @@ io.on('connection', function(socket){
 	  //send til alle tilkoblede brukerne
         io.sockets.emit("message_to_client",{ message: data["message"] });
     });
+   
    //Hente alle brukere som er logget paa
   socket.on('hent_brukere', function(data) {
 	  var bruker_liste = "";
