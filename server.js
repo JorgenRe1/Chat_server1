@@ -55,7 +55,7 @@ io.on('connection', function(socket){
 	  //Hente alle facebook idean
 	  var bruker_ider = Object.keys(brukere);
 	  for (var nr = 0; nr < bruker_ider.length+1; nr++){
-	  	if (bruker_ider[nr] != cid_fb[socket.id] && bruker_ider[nr] != null && brukere[bruker_ider[nr]]["status"]){
+	  	if (bruker_ider[nr] != null && brukere[bruker_ider[nr]]["status"]){
 	  		if (bruker_liste == "" && bruker_ider[nr] != null) {
 	  			console.log("Navn: "+brukere[bruker_ider[nr]]["navn"]);
 	  			var bruker_navn = brukere[bruker_ider[nr]]["navn"];
