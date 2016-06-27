@@ -64,7 +64,7 @@ io.on('connection', function(socket){
     //Når bruker chatter:
   socket.on('message_to_server', function (data) {
   	var stop = false;
-  	if (!check_message(data["message"])) stop = true;
+  	if (check_message(data["message"])) stop = true;
 	  var cid = socket.id;
 	  var fb_id = cid_fb[cid];
 	  var navn = data["navn"];
