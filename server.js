@@ -23,16 +23,18 @@ io.on('connection', function(socket){
       	var fb_id = data["fb_id"];
       	cid_fb[cid] = fb_id; 
       	console.log("Kanskje ny bruker");
+      	var navn = data["navn"];
     	if(brukere[fb_id] == null){
-    		console.log("Ny bruker");
-         var navn = data["navn"];
-         console.log("FB: "+fb_id);
-	 brukere[fb_id] = [];
-	 brukere[fb_id]["navn"] = navn;
-	 brukere[fb_id]["cid"] = cid;
-	 brukere[fb_id]["last"] = "keine";
-	 brukere[fb_id]["logg"] = "";
+    	    console.log("Ny bruker");
+            console.log("FB: "+fb_id);
+	    brukere[fb_id] = [];
+	    brukere[fb_id]["navn"] = navn;
+	    brukere[fb_id]["cid"] = cid;
+            brukere[fb_id]["last"] = "keine";
+	    brukere[fb_id]["logg"] = "";
     	}
+    	brukere[fb_id]["navn"] = navn;
+    	brukere[fb_id]["cid"] = cid;
     	brukere[fb_id]["status"] = true;
     /*	var msg_t = "";
     	if (brukere[fb_id] != null) {
@@ -51,13 +53,14 @@ io.on('connection', function(socket){
 	  var bruker_liste = "";
 	  //Hente alle facebook idean
 	  var bruker_ider = Object.keys(brukere);
-	  for (var nr = 0; nr < bruker_ider.length+1; nr++){
-	  	if (bruker_ider[nr] != cid_fb[socket.id] && bruker_ider[nr] != null && brukere[bruker_ider[nr]]["status"]){
-	  		if (bruker_liste == "") {
+	  console.log("brukere: "+bruker_ider);
+	  for (var nr = 0; nr < bruker_ider.length; nr++){
+	  	if (bruker_ider[nr] != cid_fb[socket.id] && bruker_ider[nr] != null && bruker_ider[nr] != "" && brukere[bruker_ider[nr]]["status"]){
+	  		if (bruker_liste == "" && brukere[bruker_ider[nr]] != null) {
 	  			var bruker_navn = brukere[bruker_ider[nr]]["navn"];
 	  			bruker_liste = "<button id='btn_"+bruker_ider[nr]+"'";
 	  			bruker_liste +=" onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\", \""+bruker_ider[nr]+"\")' class='chat_med_btn'>"+bruker_navn+"</button>";
-	  		} else if (bruker_ider[nr] != null){
+	  		} else if (brukere[bruker_ider[nr]] != null){
 	  			var bruker_navn = brukere[bruker_ider[nr]]["navn"];
 	  			bruker_liste += "<br><button id='btn_"+bruker_ider[nr]+"'";
 	  			bruker_liste +=" onclick='chat_med(\""+bruker_ider[nr]+"\", \""+bruker_navn+"\", \""+bruker_ider[nr]+"\")' class='chat_med_btn'>"+bruker_navn+"</button>";
@@ -109,8 +112,12 @@ io.on('connection', function(socket){
 	  }
 	  brukere[user_fb]["last"] = admin_fb;
 	  var logg = brukere[user_fb]["logg"];
+	  console.log("user_id: "+user_id);
           io.to(admin_id).emit('message_to_client',{message: logg, from: "self"});
           io.to(user_id).emit('message_to_client',{message: logg, from: "self"});
+          console.log("Sent to user");
+          //Send saa videre at hei det har blitt sett paa chatten til xyz
+          io.sockets.emit("chat_sett",{ fb_id: user_fb });
   });
   
   socket.on('hent_chat',function(data){
