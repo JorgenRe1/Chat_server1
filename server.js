@@ -34,7 +34,7 @@ io.on('connection', function(socket){
 	 brukere[fb_id]["logg"] = "";
     	}
     	brukere[fb_id]["status"] = true;	
-    	io.to(cid).emit("tidligere_meldinge",{ message: brukere[fb_id]["logg"] });
+    	//io.to(cid).emit("tidligere_meldinge",{ message: brukere[fb_id]["logg"] });
     });
   //Når en melding skal sendes til alle
   socket.on('message_all', function(data) {
