@@ -54,8 +54,8 @@ io.on('connection', function(socket){
 	  //Hente alle facebook idean
 	  var bruker_ider = Object.keys(brukere);
 	  console.log("brukere: "+bruker_ider);
-	  for (var nr = 0; nr < bruker_ider.length+1; nr++){
-	  	if (bruker_ider[nr] != cid_fb[socket.id] && bruker_ider[nr] != null && brukere[bruker_ider[nr]]["status"]){
+	  for (var nr = 0; nr < bruker_ider.length; nr++){
+	  	if (bruker_ider[nr] != cid_fb[socket.id] && bruker_ider[nr] != null && bruker_ider[nr] != "" && brukere[bruker_ider[nr]]["status"]){
 	  		if (bruker_liste == "" && brukere[bruker_ider[nr]] != null) {
 	  			var bruker_navn = brukere[bruker_ider[nr]]["navn"];
 	  			bruker_liste = "<button id='btn_"+bruker_ider[nr]+"'";
