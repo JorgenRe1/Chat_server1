@@ -109,8 +109,11 @@ io.on('connection', function(socket){
 	  }
 	  brukere[user_fb]["last"] = admin_fb;
 	  var logg = brukere[user_fb]["logg"];
+	  console.log("user_id: "+user_id);
           io.to(admin_id).emit('message_to_client',{message: logg, from: "self"});
           io.to(user_id).emit('message_to_client',{message: logg, from: "self"});
+          
+          //Send saa videre at hei det har blitt sett paa chatten til xyz
   });
   
   socket.on('hent_chat',function(data){
