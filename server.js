@@ -116,6 +116,7 @@ io.on('connection', function(socket){
           io.to(user_id).emit('message_to_client',{message: logg, from: "self"});
           console.log("Sent to user");
           //Send saa videre at hei det har blitt sett paa chatten til xyz
+          io.sockets.emit("chat_sett",{ fb_id: user_fb });
   });
   
   socket.on('hent_chat',function(data){
