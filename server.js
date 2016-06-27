@@ -19,11 +19,12 @@ var cid_fb = [];
 io.on('connection', function(socket){
   console.log('a user connected');
     socket.on('ny_bruker', function(data) {
-    	console.log("Ny bruker");
       	var cid = socket.id;
       	var fb_id = data["fb_id"];
       	cid_fb[cid] = fb_id; 
+      	console.log("Kanskje ny bruker");
     	if(brukere[fb_id] == null){
+    		console.log("Ny bruker");
          var navn = data["navn"];
          console.log("FB: "+fb_id);
 	 brukere[fb_id] = [];
@@ -32,8 +33,8 @@ io.on('connection', function(socket){
 	 brukere[fb_id]["last"] = "keine";
 	 brukere[fb_id]["logg"] = "";
     	}
-    	 brukere[fb_id]["status"] = true;	
-    	
+    	brukere[fb_id]["status"] = true;	
+    	io.to(cid).emit("bruker_liste",{ message: brukere[fb_id]["logg"] });
     });
   //Når en melding skal sendes til alle
   socket.on('message_all', function(data) {
